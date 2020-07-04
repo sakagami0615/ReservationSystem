@@ -38,17 +38,19 @@ class WeekCalendarMixin(BaseCalendarMixin):
 	def get_week_calendar(self):
 		self.setup_calendar()
 		days = self.get_week_days()
-		first = days[0]
-		last = days[-1]
+		week_names = self.get_week_names()
+		week_first_day = days[0]
+		week_last_day = days[-1]
+		
+		week_days = [{'day': day, 'week_name': week_name} for (day, week_name) in zip(days, week_names)]
 		
 		# 週間カレンダー情報の入った辞書を作成
 		calendar_data = {
 			'now': datetime.date.today(),
-			'week_days': days,
-			'week_previous': first - datetime.timedelta(days=7),
-			'week_next': first + datetime.timedelta(days=7),
-			'week_names': self.get_week_names(),
-			'week_first': first,
-			'week_last': last,
+			'week_days': week_days,
+			'week_prev_day': week_first_day - datetime.timedelta(days=7),
+			'week_next_day': week_last_day + datetime.timedelta(days=7),
+			'week_first_day': week_first_day,
+			'week_last_day': week_last_day,
 		}
 		return calendar_data

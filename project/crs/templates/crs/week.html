@@ -1,35 +1,55 @@
 {% extends 'crs/base.html' %}
 {% block content %}
 
-    <a href="{% url 'crs:week' now.year now.month  now.day %}">今日</a>
-    <a href="{% url 'crs:week' week_previous.year week_previous.month  week_previous.day %}">＜</a>
-    <a href="{% url 'crs:week' week_next.year week_next.month  week_next.day %}">＞</a>
-    {% if week_first.month == week_last.month %}
-        {{ week_first | date:"Y年m月" }}
+    <a href="{% url 'crs:week' now.year now.month  now.day %}" class="btn btn-primary btn-sm my-3">今日</a>
+    
+    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <a href="{% url 'crs:week' week_prev_day.year week_prev_day.month  week_prev_day.day %}" button type="button" class="btn btn-secondary">＜</a>
+        <a href="{% url 'crs:week' week_next_day.year week_next_day.month  week_next_day.day %}" button type="button" class="btn btn-secondary">＞</a>
+    </div>
+
+    {% if week_first_day.month == week_last_day.month %}
+        {{ week_first_day | date:"Y年m月" }}
     {% else %}
-        {{ week_first | date:"Y年m月" }}〜{{ week_last | date:"m月" }}
+        {{ week_first_day | date:"Y年m月" }}〜{{ week_last_day | date:"m月" }}
     {% endif %}
 
-    <table class="table">
+    <table class="table table-bordered" width="100%" style="table-layout: fixed;">
         <thead>
         <tr>
-            {% for w in week_names %}
-                <th>{{ w }}</th>
+            <td></td>
+            {% for item in week_days %}
+                {% if now == item.day %}
+                    <td class="table-success">
+                {% else %}
+                    <td>
+                {% endif %}
+                <div class="text-center">{{ item.week_name }}</div>
+                <div class="text-center">{{ item.day.day }}</div>
+            </td>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
+
+        <!-- Use Test Begin -->
         <tr>
-            {% for day in week_days %}
-                {% if now == day %}
-                    <td class="table-success">
-                        {% else %}
-                    <td>
-                {% endif %}
-            {{ day.day }}
-            </td>
+            <th><div class="text-center">UserName1</div></th>
+        
+            {% for item in week_days %}
+                <td></td>
             {% endfor %}
         </tr>
+
+        <tr>
+            <th><div class="text-center">UserName2</div></th>
+        
+            {% for item in week_days %}
+                <td></td>
+            {% endfor %}
+        </tr>
+        <!-- Use Test END -->
+        
         </tbody>
     </table>
 {% endblock %}
