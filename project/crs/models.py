@@ -2,11 +2,11 @@ from django.db import models
 from django.utils import timezone
 
 
-class User(models.models):
+class User(models.Model):
 
 	user_id = models.IntegerField(primary_key=True)
-	first_name = models.CharField(max_length=50)
-	last_name = models.CharField(max_length=50)
+	first_name = models.CharField(max_length=100)
+	last_name = models.CharField(max_length=100)
 
 	unlocker = models.BooleanField(default=False)
 
@@ -23,11 +23,11 @@ class User(models.models):
 		null=True,
 		max_length=100)
 
-	create_date = models.DateTimeField(auto_now_add = True)
-	update_date = models.DateTimeField(auto_now = True)
+	create_date = models.DateTimeField(auto_now_add=True)
+	update_date = models.DateTimeField(auto_now=True)
 
 
-class Plan(models.models):
+class Plan(models.Model):
 
 	day = models.DateField()
 	begin_time = models.TimeField()
